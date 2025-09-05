@@ -1,0 +1,46 @@
+POST:
+Array
+(
+    [name] => Joey
+    [email] => s2@gmail.com
+    [phone] => 1222
+    [role] => Nurse
+    [department] => Nursing
+    [salary] => 1231
+    [joiningDate] => 2009-03-12
+    [image] => 
+)
+
+FILES:
+Array
+(
+)
+
+
+POST:
+Array
+(
+    [name] => Jo
+    [email] => joey@1223
+    [phone] => 22
+    [role] => Nurse
+    [department] => nurising
+    [salary] => 1222
+    [joiningDate] => 2122-12-22
+)
+
+FILES:
+Array
+(
+    [image] => Array
+        (
+            [name] => smiling-delighted-female-model-with-attractive-look-drinks-smoothie-cozy-outdoor-cafe (1).jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpBA6C.tmp
+            [error] => 0
+            [size] => 21684733
+        )
+
+)
+
+
