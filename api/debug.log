@@ -44,3 +44,59 @@ Array
 )
 
 
+POST:
+Array
+(
+    [name] => Mr Sharma
+    [email] => P@gmail.com
+    [phone] => 12345678
+    [role] => Doctor
+    [department] => Orthopedics
+    [salary] => 1000000
+    [joiningDate] => 2019-12-10
+)
+
+FILES:
+Array
+(
+    [image] => Array
+        (
+            [name] => istockphoto-592648246-612x612.jpg
+            [full_path] => istockphoto-592648246-612x612.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php90F6.tmp
+            [error] => 0
+            [size] => 46649
+        )
+
+)
+
+
+POST:
+Array
+(
+    [name] => Harsh
+    [email] => P@gmail.com
+    [phone] => 971707
+    [role] => Doctor
+    [department] => Cardiologist
+    [salary] => 122333444
+    [joiningDate] => 2020-11-11
+)
+
+FILES:
+Array
+(
+    [image] => Array
+        (
+            [name] => istockphoto-592648246-612x612.jpg
+            [full_path] => istockphoto-592648246-612x612.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php8E0C.tmp
+            [error] => 0
+            [size] => 46649
+        )
+
+)
+
+

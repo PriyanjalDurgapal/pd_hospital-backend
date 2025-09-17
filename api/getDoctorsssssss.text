@@ -1,0 +1,54 @@
+<?php
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type");
+
+require_once("./db.php"); // Your PDO connection
+
+// Validate GET param
+if (!isset($_GET['staff_id']) || empty(trim($_GET['staff_id']))) {
+    echo json_encode(["error" => "staff_id is required"]);
+    exit;
+}
+
+$staff_id = trim($_GET['staff_id']); // fixed trim usage
+
+try {
+    // Query doctor info with staff info joined, filtering by staff_id
+    $stmt = $conn->prepare("
+        SELECT d.doctor_id, d.staff_id, d.name AS doctor_name, d.email AS doctor_email, d.phone AS doctor_phone,
+               d.department, d.joining_date, d.image, s.role, s.salary
+        FROM doctors d
+        INNER JOIN staff s ON d.staff_id = s.id
+        WHERE d.staff_id = ?
+        LIMIT 1
+    ");
+
+    $stmt->execute([$staff_id]);
+    $doctor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$doctor) {
+        echo json_encode([]); // return empty array if no doctor found
+        exit;
+    }
+
+    // Format response: rename fields for frontend convenience
+    $response = [
+        "doctor_id"    => $doctor["doctor_id"],
+        "staff_id"     => $doctor["staff_id"],
+        "name"         => $doctor["doctor_name"],
+        "email"        => $doctor["doctor_email"],
+        "phone"        => $doctor["doctor_phone"],
+        "department"   => $doctor["department"],
+        "joining_date" => $doctor["joining_date"],
+        "image"        => $doctor["image"],
+        "role"         => $doctor["role"],
+        "salary"       => $doctor["salary"],
+    ];
+
+    // Wrap in array so frontend can safely call .filter()
+    echo json_encode([$response]);
+} catch (PDOException $e) {
+    echo json_encode(["error" => "Database error", "details" => $e->getMessage()]);
+}

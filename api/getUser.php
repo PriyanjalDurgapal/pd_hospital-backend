@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
 $id = $_SESSION['user_id'];
 
 // Fetch user from database
-$stmt = $conn->prepare("SELECT id, name, email FROM admins WHERE id = ?");
+$stmt = $conn->prepare("SELECT id, name, email FROM patient WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();

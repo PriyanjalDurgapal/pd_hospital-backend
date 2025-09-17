@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "";       // your MySQL password
+$pass = "priyanjal";       // your MySQL password
 $dbname = "pd_hospital";
 
 try {
