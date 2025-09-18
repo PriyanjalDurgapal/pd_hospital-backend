@@ -1,19 +1,11 @@
 <?php
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Content-Type");
-// // Delete old records once per request to doctor panel
-
-
 
 require "../db.php";
-
-// // Set timezone (adjust as needed)
-// date_default_timezone_set('UTC');
-
-// // Delete old medical history records (consider moving to a cron job)
-// $pdo->exec("DELETE FROM medical_history WHERE created_at < (NOW() - INTERVAL 1 YEAR)");
 
 try {
     // doctor_id will be passed in query param like ?doctor_id=3
@@ -23,8 +15,6 @@ try {
     }
 
     $doctorId = ($_GET['doctor_id']);
-    // print_r($doctorId);
-    // die();
 
     // today’s date
     $today = date("Y-m-d");
@@ -35,6 +25,7 @@ try {
         SELECT 
             a.id AS appointment_id,
             p.name AS patient_name,
+            p.patient_id AS patient_id,
             a.dept,
             a.preferred_date,
             a.preferred_time,
@@ -48,6 +39,8 @@ try {
         JOIN doctors d ON a.doctor_id = d.doctor_id
         WHERE a.doctor_id = ?
         AND a.preferred_date BETWEEN ? AND ?
+        AND a.status != 'Done'  
+        AND a.status != 'absent' 
         ORDER BY a.preferred_date ASC, a.preferred_time ASC
     ");
     $stmt->execute([$doctorId, $today, $nextWeek]);

@@ -13,19 +13,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$staff_id = $data['staff_id'] ?? null;
+$doctor_id = $data['doctor_id'] ?? null;
 $currentPassword = $data['currentPassword'] ?? null;
 $newPassword = $data['newPassword'] ?? null;
 
-if (!$staff_id || !$currentPassword || !$newPassword) {
+if (!$doctor_id || !$currentPassword || !$newPassword) {
     echo json_encode(["success" => false, "message" => "Missing fields"]);
     exit;
 }
+$quer = $conn->prepare("SELECT staff_id FROM doctors WHERE doctor_id = :did");
+$quer->execute([":did" => $doctor_id]);
+$staff_id = $quer->fetch(PDO::FETCH_ASSOC);
+// Check if we got the staff_id
+if (!$staff_id) {
+    echo json_encode(["success" => false, "message" => "Doctor not found"]);
+    exit;
+}
+
+// extract the staff_id 
+$staff_id = $staff_id['staff_id'];
+
 
 // Fetch staff user
 $query = $conn->prepare("SELECT password FROM staff WHERE id = :id");
 $query->execute([":id" => $staff_id]);
 $user = $query->fetch(PDO::FETCH_ASSOC);
+// print_r($user);
+// die();
 
 if (!$user) {
     echo json_encode(["success" => false, "message" => "User not found"]);
